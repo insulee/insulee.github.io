@@ -115,7 +115,8 @@
   }
   @keyframes blobA{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4%,4%,0) scale(1.1)}}
   @keyframes blobB{from{transform:translate3d(0,0,0)}to{transform:translate3d(-5%,-6%,0) scale(1.12)}}
-  .hero .wrap{position:relative;width:100%}
+  .hero .wrap{position:relative;width:100%;z-index:1}
+  .hero-led{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
   #hero-title{
     font-size:clamp(44px,7.8vw,86px);font-weight:800;letter-spacing:-.03em;margin-top:8px;
     background:linear-gradient(110deg,var(--text) 42%,#ffffff 50%,var(--text) 58%);
@@ -144,7 +145,7 @@
   .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(75,123,229,.07)}
 
   /* ── S1 컬러: 65,536 ── */
-  .s-color{background:#05070d;text-align:center;overflow:hidden}
+  .s-color{background:#040507;text-align:center;overflow:hidden}
   .s-color::before{
     content:"";position:absolute;left:50%;top:18%;width:900px;height:520px;
     transform:translateX(-50%);filter:blur(90px);opacity:.35;pointer-events:none;
@@ -178,7 +179,7 @@
   .s-color .wrap{position:relative;z-index:1}
 
   /* ── S2 스케일: 112 → 320 (설계 도면 그리드 배경) ── */
-  .s-scale{background:#0e1322;text-align:center;overflow:hidden}
+  .s-scale{background:#101a30;text-align:center;overflow:hidden}
   .s-scale::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background-image:
@@ -221,7 +222,7 @@
   .grid-legend b{color:var(--blue-soft)}
 
   /* ── S3 DabitOne — 다크, 앱 창에 스포트라이트 + 떠다니는 오브 ── */
-  .s-one{background:linear-gradient(180deg,#101827 0%,#0b0f1a 100%);overflow:hidden}
+  .s-one{background:linear-gradient(180deg,#14203a 0%,#0d1526 100%);overflow:hidden}
   .s-one::before{
     content:"";position:absolute;left:50%;top:26%;width:820px;height:520px;
     transform:translateX(-50%);pointer-events:none;
@@ -412,7 +413,7 @@
     --blue-soft:#7ea3f0;
     color:var(--text);
   }
-  .s-signal{background:#060a0c;text-align:center;overflow:hidden}
+  .s-signal{background:#051009;text-align:center;overflow:hidden}
   .s-signal .eyebrow{color:var(--green)}
   .s-signal .eyebrow::before,.s-signal .center .eyebrow::after{background:var(--green)}
   .codewall{
@@ -489,7 +490,7 @@
 
   /* ── S5 챗봇: 밤 11시의 채팅 장면 ── */
   .s-night{
-    background:linear-gradient(180deg,#0a0e18 0%,#06080f 100%);overflow:hidden;
+    background:linear-gradient(180deg,#0d1018 0%,#07080e 100%);overflow:hidden;
   }
   .s-night::before{
     content:"";position:absolute;inset:0 0 auto;height:55%;pointer-events:none;
@@ -532,8 +533,10 @@
   .chan p{margin:0;font-size:14px;color:var(--muted)}
   .support-note{text-align:center;color:var(--muted);font-size:14px;margin-top:32px}
 
-  #product{background:#080b13}
-  #faq{background:#0d1120}
+  #product{background:#06080d;position:relative;overflow:hidden}
+  #product::before{content:"";position:absolute;left:50%;top:-12%;width:900px;height:620px;transform:translateX(-50%);background:radial-gradient(46% 55% at 50% 0%,rgba(126,163,240,.11),transparent 72%);pointer-events:none}
+  #product .wrap{position:relative;z-index:1}
+  #faq{background:#111827}
   /* ── FAQ ── */
   .faq{max-width:760px;margin:52px auto 0}
   .faq details{
@@ -568,7 +571,7 @@
   .closing::before{transform:translate(-50%,-50%) translateY(var(--par,0px))}
   .closing .wrap{position:relative;z-index:1}
   footer{
-    border-top:1px solid var(--line-soft);padding:52px 0 56px;
+    background:#05060a;border-top:1px solid var(--line-soft);padding:52px 0 56px;
     color:var(--muted);font-size:13.5px;text-align:center;
   }
   footer .foot-brand{font-weight:700;color:var(--text);letter-spacing:.04em;margin-bottom:10px;font-size:15px}
@@ -764,7 +767,7 @@
   .new-line{color:var(--text);font-size:17px;font-weight:600;margin:0}
 
   /* 웹서버 섹션 — 흐르는 도트 그리드 (데이터가 오가는 느낌) */
-  #spec{background:#0c101d;position:relative;overflow:hidden}
+  #spec{background:#0d1322;position:relative;overflow:hidden}
   #spec::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background-image:radial-gradient(rgba(126,163,240,.13) 1px,transparent 1.5px);
@@ -799,6 +802,7 @@
 
 <!-- ═══ 히어로 ═══ -->
 <section class="hero">
+  <canvas id="heroLed" class="hero-led" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="eyebrow reveal">2026 신제품 발표</div>
     <h1 id="hero-title" class="reveal d1">전광판의 <em>기준</em>이 바뀝니다</h1>
@@ -807,7 +811,7 @@
       호환의 방식까지 바뀝니다.<br>
       <strong>DB520 · DB720, 그리고 DabitOne.</strong>
     </p>
-    <div class="hero-spectrum reveal d3" aria-hidden="true"></div>
+
   </div>
 </section>
 
@@ -1075,6 +1079,36 @@
   const html=document.documentElement;
   html.classList.add('js');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 히어로 LED 필드 — 정렬된 픽셀 격자 위로 색의 물결 (애플 초대장식 추상 비주얼) */
+  const hled=document.getElementById('heroLed');
+  if(hled&&hled.getContext){
+    const hctx=hled.getContext('2d');
+    let HW=0,HH=0,GAP=27;
+    function hsize(){
+      HW=hled.clientWidth;HH=hled.clientHeight;
+      const d=Math.min(devicePixelRatio||1,2);
+      hled.width=HW*d;hled.height=HH*d;hctx.setTransform(d,0,0,d,0,0);
+    }
+    hsize();addEventListener('resize',()=>{hsize();if(reduced)hdraw(40000)});
+    function hdraw(t){
+      hctx.clearRect(0,0,HW,HH);
+      const cx=HW/2,cy=HH*0.44;
+      for(let y=GAP/2;y<HH;y+=GAP)for(let x=GAP/2;x<HW;x+=GAP){
+        const dx=(x-cx)/(HW*0.40),dy=(y-cy)/(HH*0.46);
+        const dc=Math.sqrt(dx*dx+dy*dy);
+        const vis=Math.max(0,Math.min(1,(dc-0.55)/0.55));
+        if(vis<0.03)continue;
+        const hue=(x*0.16+y*0.10+t*0.018)%360;
+        const wave=0.5+0.5*Math.sin(x*0.011+y*0.007+t*0.0011);
+        const a=vis*(0.08+0.34*wave);
+        hctx.fillStyle='hsla('+hue+',85%,62%,'+a+')';
+        hctx.beginPath();hctx.arc(x,y,2.4,0,6.28);hctx.fill();
+      }
+    }
+    if(reduced){requestAnimationFrame(()=>{hsize();hdraw(40000)})}
+    else{(function hloop(t){hdraw(t||0);requestAnimationFrame(hloop)})(0)}
+  }
 
   /* 패럴랙스 — 히어로 콘텐츠는 느리게, 클로징 배경 타이포는 반대로 흐른다 */
   if(!reduced){
