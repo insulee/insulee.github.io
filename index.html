@@ -16,8 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-<title>다빛솔루션 2026 신제품 발표</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
   :root{
     --ink:#0b0f1a;
@@ -98,7 +97,7 @@
   .faq details:hover{border-color:var(--blue)}
 
   /* ── 히어로 ── */
-  .hero{padding:130px 0 120px;text-align:center;overflow:hidden}
+  .hero{min-height:calc(100vh - 60px);min-height:calc(100svh - 60px);display:flex;align-items:center;justify-content:center;padding:48px 0;text-align:center;overflow:hidden}
   .hero::before{
     content:"";position:absolute;inset:-40% -20% auto;height:120%;
     background:
@@ -116,9 +115,9 @@
   }
   @keyframes blobA{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4%,4%,0) scale(1.1)}}
   @keyframes blobB{from{transform:translate3d(0,0,0)}to{transform:translate3d(-5%,-6%,0) scale(1.12)}}
-  .hero .wrap{position:relative}
+  .hero .wrap{position:relative;width:100%}
   #hero-title{
-    font-size:clamp(40px,7vw,72px);font-weight:800;letter-spacing:-.03em;margin-top:8px;
+    font-size:clamp(44px,7.8vw,86px);font-weight:800;letter-spacing:-.03em;margin-top:8px;
     background:linear-gradient(110deg,var(--text) 42%,#ffffff 50%,var(--text) 58%);
     background-size:230% 100%;
     -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -133,7 +132,7 @@
     animation:flow 5s linear infinite;
     opacity:.9;
   }
-  .hero-sub{max-width:620px;margin:28px auto 0;color:var(--muted);font-size:19px;line-height:1.85}
+  .hero-sub{max-width:640px;margin:30px auto 0;color:var(--muted);font-size:clamp(18px,2vw,21px);line-height:1.9}
   .hero-sub strong{color:var(--text);font-weight:700}
   .cta-row{display:flex;gap:14px;justify-content:center;margin-top:44px;flex-wrap:wrap}
   .btn{
@@ -145,7 +144,7 @@
   .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(75,123,229,.07)}
 
   /* ── S1 컬러: 65,536 ── */
-  .s-color{background:var(--ink2);text-align:center;overflow:hidden}
+  .s-color{background:#05070d;text-align:center;overflow:hidden}
   .s-color::before{
     content:"";position:absolute;left:50%;top:18%;width:900px;height:520px;
     transform:translateX(-50%);filter:blur(90px);opacity:.35;pointer-events:none;
@@ -179,7 +178,7 @@
   .s-color .wrap{position:relative;z-index:1}
 
   /* ── S2 스케일: 112 → 320 (설계 도면 그리드 배경) ── */
-  .s-scale{text-align:center;overflow:hidden}
+  .s-scale{background:#0e1322;text-align:center;overflow:hidden}
   .s-scale::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background-image:
@@ -533,6 +532,8 @@
   .chan p{margin:0;font-size:14px;color:var(--muted)}
   .support-note{text-align:center;color:var(--muted);font-size:14px;margin-top:32px}
 
+  #product{background:#080b13}
+  #faq{background:#0d1120}
   /* ── FAQ ── */
   .faq{max-width:760px;margin:52px auto 0}
   .faq details{
@@ -763,7 +764,7 @@
   .new-line{color:var(--text);font-size:17px;font-weight:600;margin:0}
 
   /* 웹서버 섹션 — 흐르는 도트 그리드 (데이터가 오가는 느낌) */
-  #spec{background:#0a0d15;position:relative;overflow:hidden}
+  #spec{background:#0c101d;position:relative;overflow:hidden}
   #spec::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background-image:radial-gradient(rgba(126,163,240,.13) 1px,transparent 1.5px);
