@@ -792,6 +792,15 @@
     .free-box{grid-template-columns:1fr;padding:28px 24px}
     .appbody{grid-template-columns:1fr}
   }
+  /* ── A안: 장면 섹션 뷰포트 채움 + 서사 섹션 호흡 상향 (복원: 이 블록 삭제) ── */
+  .s-color,.s-scale,#product,.s-one{
+    min-height:100vh;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .s-signal,#spec,.s-night{padding:150px 0}
+  @media (max-width:760px){
+    .s-signal,#spec,.s-night{padding:100px 0}
+  }
 </style>
 
 <header>
