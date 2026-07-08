@@ -190,7 +190,7 @@
     mask-image:radial-gradient(75% 65% at 50% 42%,#000 0%,transparent 100%);
   }
   .s-scale .wrap{position:relative}
-  .grid-stage{max-width:960px;margin:56px auto 0}
+  .grid-stage{max-width:860px;margin:56px auto 0}
   .grid-counter{
     display:flex;align-items:baseline;justify-content:center;gap:14px;margin-bottom:26px;
     font-variant-numeric:tabular-nums;
@@ -201,10 +201,10 @@
   .grid-counter small{font-size:15px;font-weight:600;color:var(--blue-soft);letter-spacing:.04em}
   .modgrid{
     position:relative;
-    display:grid;grid-template-columns:repeat(40,1fr);gap:4px;margin-bottom:44px;
+    display:grid;grid-template-columns:repeat(40,1fr);gap:3px;
   }
   .modgrid i{
-    display:block;aspect-ratio:1;border-radius:2px;
+    display:block;aspect-ratio:1;border-radius:1.5px;
     background:rgba(139,148,167,.10);
     transition:background .3s ease;
   }
@@ -214,18 +214,6 @@
     position:absolute;top:-8px;bottom:-8px;left:50%;width:0;aspect-ratio:auto;
     border-left:1.5px dashed rgba(245,158,11,.55);background:none;border-radius:0;
   }
-  /* 도면 치수 표기 — 4단 × 40열 (은은한 점선) */
-  .modgrid .dim{
-    position:absolute;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
-    color:rgba(126,163,240,.62);white-space:nowrap;pointer-events:none;
-  }
-  .modgrid .dim-r{
-    left:-20px;top:0;bottom:0;display:flex;align-items:center;justify-content:center;
-    writing-mode:vertical-rl;text-orientation:mixed;
-  }
-  .modgrid .dim-r::after{content:"";position:absolute;right:-4px;top:1px;bottom:1px;border-left:1px dashed rgba(126,163,240,.22)}
-  .modgrid .dim-c{left:0;right:0;bottom:-26px;display:flex;align-items:center;gap:9px;justify-content:center}
-  .modgrid .dim-c::before,.modgrid .dim-c::after{content:"";height:0;flex:1;border-top:1px dashed rgba(126,163,240,.22)}
   .grid-legend{
     display:flex;justify-content:space-between;margin-top:14px;
     font-size:13px;color:var(--muted);letter-spacing:.02em;
@@ -859,14 +847,13 @@
       <div class="grid-counter"><span id="cnt">160</span><small>모듈</small></div>
       <div class="modgrid" id="modgrid" aria-hidden="true">
         <i class="gmark" aria-hidden="true"></i>
-        <span class="dim dim-r">4단</span>
-        <span class="dim dim-c">40열</span>
       </div>
       <div class="grid-legend">
         <span>기존 DB600, 80개</span>
         <span><b>DB720, 160개</b></span>
       </div>
     </div>
+    <p class="note reveal d3">확장 구성과 출시 일정은 확정되는 대로 안내드립니다.</p>
   </div>
 </section>
 
