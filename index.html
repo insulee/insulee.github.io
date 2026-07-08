@@ -178,7 +178,7 @@
   @keyframes flow{to{background-position:200% 0}}
   .s-color .wrap{position:relative;z-index:1}
 
-  /* ── S2 스케일: 112 → 320 (설계 도면 그리드 배경) ── */
+  /* ── S2 스케일: 80 → 160 (설계 도면 그리드 배경) ── */
   .s-scale{background:#101a30;text-align:center;overflow:hidden}
   .s-scale::before{
     content:"";position:absolute;inset:0;pointer-events:none;
@@ -209,16 +209,16 @@
     transition:background .3s ease;
   }
   .modgrid i.on{background:var(--blue);box-shadow:0 0 6px rgba(75,123,229,.5)}
-  /* 기존 세대 경계 마커 — 14열(112개) 지점 */
+  /* 기존 세대 경계 마커 — 20열(80개) 지점 */
   .modgrid .gmark{
-    position:absolute;top:-8px;bottom:-8px;left:35%;width:0;aspect-ratio:auto;
+    position:absolute;top:-8px;bottom:-8px;left:50%;width:0;aspect-ratio:auto;
     border-left:1.5px dashed rgba(245,158,11,.55);background:none;border-radius:0;
   }
   .grid-legend{
     display:flex;justify-content:space-between;margin-top:14px;
     font-size:13px;color:var(--muted);letter-spacing:.02em;
   }
-  .grid-legend span:first-child{margin-left:14%}
+  .grid-legend span:first-child{margin-left:30%}
   .grid-legend b{color:var(--blue-soft)}
 
   /* ── S3 DabitOne — 다크, 앱 창에 스포트라이트 + 떠다니는 오브 ── */
@@ -838,19 +838,19 @@
 <!-- ═══ S2. 스케일 — 112 → 320 ═══ -->
 <section class="s-scale" id="scale">
   <div class="wrap">
-    <h2 class="reveal">한 대의 컨트롤러.<br>세 배 가까운 화면.</h2>
+    <h2 class="reveal">한 대의 컨트롤러.<br>두 배 넓은 화면.</h2>
     <p class="sub center reveal d1" style="margin-left:auto;margin-right:auto">
-      16×16픽셀 모듈 320개, DB720 한 대가 그리는 화면입니다.<br>
-      DB520은 160개까지 그립니다.
+      16×16픽셀 모듈 160개, DB720 한 대가 그리는 화면입니다.<br>
+      기존 DB600의 두 배 크기입니다.
     </p>
     <div class="grid-stage reveal d2">
-      <div class="grid-counter"><span id="cnt">320</span><small>모듈</small></div>
+      <div class="grid-counter"><span id="cnt">160</span><small>모듈</small></div>
       <div class="modgrid" id="modgrid" aria-hidden="true">
         <i class="gmark" aria-hidden="true"></i>
       </div>
       <div class="grid-legend">
-        <span>기존 DB600, 112개까지</span>
-        <span><b>DB720, 320개</b></span>
+        <span>기존 DB600, 80개</span>
+        <span><b>DB720, 160개</b></span>
       </div>
     </div>
     <p class="note reveal d3">확장 구성과 출시 일정은 확정되는 대로 안내드립니다.</p>
@@ -1043,8 +1043,8 @@
     <div class="faq reveal d2">
       <details>
         <summary>DB520과 DB720, 뭘 골라야 하나요?</summary>
-        <p class="a">중소형 화면이면 DB520 — 모듈 160개, 256색.
-          더 크게, 더 풍부한 색이 필요하면 DB720 — 모듈 320개, 65,536색입니다.</p>
+        <p class="a">중소형 화면이면 DB520 — 256색.
+          더 크게, 더 풍부한 색이 필요하면 DB720 — 65,536색입니다.</p>
       </details>
       <details>
         <summary>지금 쓰는 모듈에도 연결되나요?</summary>
@@ -1135,12 +1135,12 @@
     },{passive:true});
   }
 
-  /* 모듈 격자 생성: 40열 × 8단 = 320칸 (마커: 14열 = 기존 112개 지점) */
+  /* 모듈 격자 생성: 40열 × 4단 = 160칸 (마커: 20열 = 기존 80개 지점) */
   const grid=document.getElementById('modgrid');
   let gridCells=[];
   if(grid){
     const frag=document.createDocumentFragment();
-    for(let r=0;r<8;r++)for(let c=0;c<40;c++){
+    for(let r=0;r<4;r++)for(let c=0;c<40;c++){
       const i=document.createElement('i');
       frag.appendChild(i);
     }
@@ -1174,16 +1174,16 @@
     document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
   }
 
-  /* 카운트업 + 격자 점등: 0 → 320, 열 단위로 차오르며 112 마커를 지나침 */
+  /* 카운트업 + 격자 점등: 0 → 160, 열 단위로 차오르며 80 마커를 지나침 */
   const cnt=document.getElementById('cnt');
   let scaleDone=false;
   function runScale(){
     if(scaleDone)return;scaleDone=true;
-    if(reduced){gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='320';return}
+    if(reduced){gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='160';return}
     const cols=[];
     for(let c=0;c<40;c++){
       const col=[];
-      for(let r=0;r<8;r++)col.push(r*40+c);
+      for(let r=0;r<4;r++)col.push(r*40+c);
       cols.push(col);
     }
     const D=2200, t0=performance.now();
@@ -1192,9 +1192,9 @@
       const ease=1-Math.pow(1-p,3);
       const colN=Math.floor(ease*cols.length);
       for(let i=0;i<colN;i++)cols[i].forEach(idx=>gridCells[idx]&&gridCells[idx].classList.add('on'));
-      if(cnt)cnt.textContent=String(Math.round(ease*320));
+      if(cnt)cnt.textContent=String(Math.round(ease*160));
       if(p<1)requestAnimationFrame(tick);
-      else{gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='320'}
+      else{gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='160'}
     }
     if(cnt)cnt.textContent='0';
     requestAnimationFrame(tick);
