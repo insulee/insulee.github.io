@@ -144,7 +144,7 @@
   .btn-primary{background:var(--red);color:#fff;box-shadow:0 6px 24px rgba(232,68,58,.28)}
   .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(75,123,229,.07)}
 
-  /* ── S1 컬러: 65,536 ── */
+  /* ── S1 컬러: 256 ── */
   .s-color{background:#040507;text-align:center;overflow:hidden}
   .s-color::before{
     content:"";position:absolute;left:50%;top:18%;width:900px;height:520px;
@@ -201,7 +201,7 @@
   .grid-counter small{font-size:15px;font-weight:600;color:var(--blue-soft);letter-spacing:.04em}
   .modgrid{
     position:relative;
-    display:grid;grid-template-columns:repeat(40,1fr);gap:3px;
+    display:grid;grid-template-columns:repeat(32,1fr);gap:3px;
   }
   .modgrid i{
     display:block;aspect-ratio:1;border-radius:1.5px;
@@ -209,7 +209,7 @@
     transition:background .3s ease;
   }
   .modgrid i.on{background:var(--blue);box-shadow:0 0 6px rgba(75,123,229,.5)}
-  /* 기존 세대 경계 마커 — 20열(80개) 지점 */
+  /* 기존 세대 경계 마커 — 16열(64개) 지점 */
   .modgrid .gmark{
     position:absolute;top:-8px;bottom:-8px;left:50%;width:0;aspect-ratio:auto;
     border-left:1.5px dashed rgba(245,158,11,.55);background:none;border-radius:0;
@@ -822,35 +822,35 @@
   </div>
 </section>
 
-<!-- ═══ S1. 컬러 — 65,536 ═══ -->
+<!-- ═══ S1. 컬러 — 256 ═══ -->
 <section class="s-color" id="color">
   <div class="wrap">
-    <div class="giant reveal">65,536<small>색</small></div>
+    <div class="giant reveal">256<small>색</small></div>
     <h2 class="reveal d1">고를 색이, 이렇게 많아졌습니다.</h2>
     <p class="sub center reveal d2" style="margin-left:auto;margin-right:auto">
-      DB520은 256색, DB720은 65,536색을 냅니다.<br>
-      사진도, 그라데이션도 그대로 표현됩니다.
+      DB520과 DB720은 256색을 냅니다.<br>
+      사진도, 그라데이션도 자연스럽게 표현됩니다.
     </p>
     <div class="colorbar reveal d3" aria-hidden="true"></div>
   </div>
 </section>
 
-<!-- ═══ S2. 스케일 — 112 → 320 ═══ -->
+<!-- ═══ S2. 스케일 — DB600T 64 → DB720T 128 ═══ -->
 <section class="s-scale" id="scale">
   <div class="wrap">
     <h2 class="reveal">한 대의 컨트롤러.<br>두 배 넓은 화면.</h2>
     <p class="sub center reveal d1" style="margin-left:auto;margin-right:auto">
-      16×16픽셀 모듈 160개, DB720 한 대가 그리는 화면입니다.<br>
+      16×16픽셀 모듈 128개, DB720 한 대가 그리는 화면입니다.<br>
       기존 DB600의 두 배 크기입니다.
     </p>
     <div class="grid-stage reveal d2">
-      <div class="grid-counter"><span id="cnt">160</span><small>모듈</small></div>
+      <div class="grid-counter"><span id="cnt">128</span><small>모듈</small></div>
       <div class="modgrid" id="modgrid" aria-hidden="true">
         <i class="gmark" aria-hidden="true"></i>
       </div>
       <div class="grid-legend">
-        <span>기존 DB600, 80개</span>
-        <span><b>DB720, 160개</b></span>
+        <span>기존 DB600, 64개</span>
+        <span><b>DB720, 128개</b></span>
       </div>
     </div>
   </div>
@@ -1038,8 +1038,8 @@
     <div class="faq reveal d2">
       <details>
         <summary>DB520과 DB720, 뭘 골라야 하나요?</summary>
-        <p class="a">중소형 화면이면 DB520 — 256색.
-          더 크게, 더 풍부한 색이 필요하면 DB720 — 65,536색입니다.</p>
+        <p class="a">중소형 화면이면 DB520 — 2단 32열까지.
+          더 큰 화면이 필요하면 DB720 — 4단 32열·8단 14열까지 갑니다. 둘 다 256색입니다.</p>
       </details>
       <details>
         <summary>지금 쓰는 모듈에도 연결되나요?</summary>
@@ -1130,12 +1130,12 @@
     },{passive:true});
   }
 
-  /* 모듈 격자 생성: 40열 × 4단 = 160칸 (마커: 20열 = 기존 80개 지점) */
+  /* 모듈 격자 생성: 32열 × 4단 = 128칸 (마커: 16열 = 기존 DB600T 64개 지점) */
   const grid=document.getElementById('modgrid');
   let gridCells=[];
   if(grid){
     const frag=document.createDocumentFragment();
-    for(let r=0;r<4;r++)for(let c=0;c<40;c++){
+    for(let r=0;r<4;r++)for(let c=0;c<32;c++){
       const i=document.createElement('i');
       frag.appendChild(i);
     }
@@ -1169,16 +1169,16 @@
     document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
   }
 
-  /* 카운트업 + 격자 점등: 0 → 160, 열 단위로 차오르며 80 마커를 지나침 */
+  /* 카운트업 + 격자 점등: 0 → 128, 열 단위로 차오르며 64 마커를 지나침 */
   const cnt=document.getElementById('cnt');
   let scaleDone=false;
   function runScale(){
     if(scaleDone)return;scaleDone=true;
-    if(reduced){gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='160';return}
+    if(reduced){gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='128';return}
     const cols=[];
-    for(let c=0;c<40;c++){
+    for(let c=0;c<32;c++){
       const col=[];
-      for(let r=0;r<4;r++)col.push(r*40+c);
+      for(let r=0;r<4;r++)col.push(r*32+c);
       cols.push(col);
     }
     const D=2200, t0=performance.now();
@@ -1187,9 +1187,9 @@
       const ease=1-Math.pow(1-p,3);
       const colN=Math.floor(ease*cols.length);
       for(let i=0;i<colN;i++)cols[i].forEach(idx=>gridCells[idx]&&gridCells[idx].classList.add('on'));
-      if(cnt)cnt.textContent=String(Math.round(ease*160));
+      if(cnt)cnt.textContent=String(Math.round(ease*128));
       if(p<1)requestAnimationFrame(tick);
-      else{gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='160'}
+      else{gridCells.forEach(c=>c.classList.add('on'));if(cnt)cnt.textContent='128'}
     }
     if(cnt)cnt.textContent='0';
     requestAnimationFrame(tick);
